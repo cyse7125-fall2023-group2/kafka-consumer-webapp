@@ -1,5 +1,9 @@
 # Use a Node.js 10 Alpine base image
-FROM node:10-alpine
+FROM node:latest
+
+#install python
+# RUN apk-get update || : && ap-get install python -y
+
 
 # Set the working directory in the image
 WORKDIR /home/node/app
