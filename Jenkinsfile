@@ -9,7 +9,7 @@ pipeline {
                 script {
                     // Define credentials for GitHub
                     withCredentials([usernamePassword(credentialsId: 'GITHUB_CREDENTIALS_ID', usernameVariable: 'githubUsername', passwordVariable: 'githubToken')]) {
-                        git branch: 'main', credentialsId: 'GITHUB_CREDENTIALS_ID', url: 'https://github.com/cyse7125-fall2023-group2/webapp'        
+                        git branch: 'main', credentialsId: 'GITHUB_CREDENTIALS_ID', url: 'https://github.com/cyse7125-fall2023-group2/kafka-consumer-webapp'        
                     }
                 }
             }
@@ -63,10 +63,10 @@ pipeline {
                         sh """
                             echo ${version_id}
                             docker login -u \${dockerHubUsername} -p \${dockerHubPassword}
-                            docker build -t sumanthksai/webapp:${version_id} .
-                            docker push sumanthksai/webapp:${version_id} 
-                            docker build -t sumanthksai/csye7125-flyway:latest ./database
-                            docker push sumanthksai/csye7125-flyway:latest
+                            docker build -t sumanthksai/csye7125-consumer-webapp:${version_id} .
+                            docker push sumanthksai/csye7125-consumer-webapp:${version_id} 
+                            docker build -t sumanthksai/csye7125-consumer-flyway:latest ./database
+                            docker push sumanthksai/csye7125-consumer-flyway:latest
                         """
                     }
                 }
