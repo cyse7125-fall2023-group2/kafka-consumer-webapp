@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: {{ .Release.Name }}-csye7125-consumer
+   labels:
+     app : {{ .Release.Name }}-webapp-consumer
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  strategy:
+    type: {{ .Values.deployment.strategy.type }}
+    rollingUpdate:
+      maxSurge: {{ .Values.deployment.strategy.rollingUpdate.maxSurge }}
+      maxUnavailable: {{ .Values.deployment.strategy.rollingUpdate.maxUnavailable }}
+  minReadySeconds: {{ .Values.deployment.minReadySeconds }}
+  progressDeadlineSeconds: {{ .Values.deployment.progressDeadlineSeconds }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-webapp-consumer
+  template:
+      metadata:
+       labels:
+        app: {{ .Release.Name }}-webapp-consumer
+      spec:
+        imagePullSecrets:
+          - name: {{ .Release.Name }}-docker-regcred
+        containers:
+        - name: {{ .Values.primaryContainer.name }}
+          image: {{ .Values.primaryContainer.repository }}:{{ .Values.primaryContainer.tag }}
+          imagePullPolicy: {{ .Values.primaryContainer.pullPolicy }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secrets
+                  key: DB_PASSWORD
+            - name: DB_USERNAME
+              value: {{.Values.postgresql.auth.username}}
+            - name: DB_HOST
+              value: {{ .Release.Name }}-postgresql-0.{{ .Release.Name }}-postgresql-hl.{{ .Release.Namespace }}.svc.cluster.local
+            {{- range .Values.env }}
+            - name: {{ .name | quote }}
+              value: {{ .value | quote  }}
+            {{- end }}
+            - name: BROKER_ENDPOINT
+              value: {{ .Release.Name }}.default.svc.cluster.local:9092
+            - name: SASL_USERNAME
+              value: {{.Values.kafkaBroker.user}}
+            - name: SASL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-user-passwords
+                  key: client-passwords
+          ports:
+            - containerPort: {{ .Values.primaryContainer.ports.containerPort }}
+          volumeMounts:
+          {{- range .Values.initContainer.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+              {{- end }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.primaryContainer.readinessProbe.httpGet.path }}
+              port: {{ .Values.primaryContainer.ports.containerPort }}
+            initialDelaySeconds: {{ .Values.primaryContainer.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.primaryContainer.readinessProbe.periodSeconds }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.primaryContainer.livenessProbe.httpGet.path }}
+              port: {{ .Values.primaryContainer.ports.containerPort }}
+            initialDelaySeconds: {{ .Values.primaryContainer.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.primaryContainer.livenessProbe.periodSeconds }}
+        initContainers:
+        {{- if .Values.initContainer.enabled }}
+          - name: {{ .Values.initContainer.name }}
+            image: {{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}
+            volumeMounts:
+            {{- range .Values.initContainer.volumeMounts }}
+              - name: {{ .name }}
+                mountPath: {{ .mountPath }}
+                {{- if .subPath }}
+                subPath: {{ .subPath }}
+                {{- end }}
+            {{- end }}
+            command: ["flyway","migrate", "-configFiles=/flyway/conf/flyway.conf" ,"-locations=filesystem:/flyway/sql" , "-connectRetries=60"] 
+        {{- end }}
+        volumes:
+        - name: flyway-config-volume
+          configMap:
+            name: {{ .Release.Name }}-configs
+        - name: secret-volume
+          secret:
+            secretName: {{ .Release.Name }}-secrets
