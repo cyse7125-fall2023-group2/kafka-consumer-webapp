@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: health-check-config
+data:
+  URI: "https://www.google.com"
+  MAX_RETRIES: "3"
+    
+
