@@ -142,7 +142,7 @@ primaryContainer:
     initialDelaySeconds: 10
     periodSeconds: 20
   volumeMounts:
-    - name: secret-volume
+    - name: secret-volume-v1
       mountPath: /flyway/db_password.txt
       subPath: db_password.txt
 
@@ -153,9 +153,9 @@ initContainer:
     repository: sumanthksai/fly-v1
     tag: latest
   volumeMounts:
-    - name: flyway-config-volume
+    - name: flyway-config-volume-v1
       mountPath: /flyway/conf
-    - name: secret-volume
+    - name: secret-volume-v1
       mountPath: /flyway/db_password.txt
       subPath: db_password.txt
 
