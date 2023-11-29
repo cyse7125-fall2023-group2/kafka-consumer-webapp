@@ -21,8 +21,8 @@ const saveConsumerCheck = async(request) =>{
         // ) {
         //   throw new Error();
         // }
-        let data = await db["http-check"].create({
-    //      id: uuidv4().toString(),
+        let data = await db["health-check"].create({
+          id: uuidv4().toString(),
           ...request,
  //         check_created: new Date().toISOString(),
   //        check_updated: new Date().toISOString(),
