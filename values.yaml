@@ -100,7 +100,7 @@ affinity: {}
 kafka:
   provisioning:
     enabled: true
-    numPartitions: 3
+    numPartitions: 1
     replicationFactor: 1
     topics:
       - name: test
