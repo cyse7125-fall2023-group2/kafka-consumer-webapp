@@ -87,9 +87,9 @@ spec:
             command: ["flyway","migrate", "-configFiles=/flyway/conf/flyway.conf" ,"-locations=filesystem:/flyway/sql" , "-connectRetries=60"] 
         {{- end }}
         volumes:
-        - name: flyway-config-volume
+        - name: flyway-config-volume-v1
           configMap:
             name: {{ .Release.Name }}-configs
-        - name: secret-volume
+        - name: secret-volume-v1
           secret:
             secretName: {{ .Release.Name }}-secrets
