@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const httpCheckRoutes = require("./api_routes/httpCheck");
-const kafkaService = require('./services/kafkaConsumer')
+const consumer = require('./services/consumer')
+
 
 //Database
 const { sequelize } = require("./models");
@@ -43,7 +44,8 @@ app.use('/v1/http-check',httpCheckRoutes);
 
 const PORT = process.env.APP_PORT || 4000;
 app.listen({ port: PORT }, async () => {
-  kafkaService.init();
+  //kafkaService.init();
+  consumer.init();
 });
 
 module.exports = app;

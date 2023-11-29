@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS app."http-checks"
+DROP TABLE IF EXISTS app."health-check"

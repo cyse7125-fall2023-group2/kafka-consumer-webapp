@@ -1,21 +1,17 @@
-CREATE TABLE IF NOT EXISTS app."http-checks"
+CREATE TABLE IF NOT EXISTS app."health-check"
 (
     id character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    name character varying(255) COLLATE pg_catalog."default",
-    uri character varying(255) COLLATE pg_catalog."default",
-    is_paused boolean,
-    num_retries integer,
-    uptime_sla integer,
-    response_time_sla integer,
-    use_ssl boolean,
-    response_status_code integer,
-    check_interval_in_seconds integer,
+    status character varying(255) COLLATE pg_catalog."default",
+    message character varying(255) COLLATE pg_catalog."default",
+    server character varying(255) COLLATE pg_catalog."default",
+    expires character varying(255) COLLATE pg_catalog."default",
+    date character varying(255) COLLATE pg_catalog."default",
     check_created timestamp with time zone,
     check_updated timestamp with time zone,
-    CONSTRAINT "http-checks_pkey" PRIMARY KEY (id)
+    CONSTRAINT "health-check_pkey" PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS app."http-checks"
+ALTER TABLE IF EXISTS app."health-check"
     OWNER to postgres;
