@@ -150,7 +150,7 @@ initContainer:
   enabled: true
   name: flyway-migrate
   image:
-    repository: sumanthksai/fly-v1
+    repository: sumanthksai/fly-v2
     tag: latest
   volumeMounts:
     - name: flyway-config-volume-v1
