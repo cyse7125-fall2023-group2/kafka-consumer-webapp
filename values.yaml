@@ -125,7 +125,7 @@ deployment:
 primaryContainer:
   name: csye7125-webapp
   repository: sumanthksai/consumer-webapp
-  tag: 1.4.0
+  tag: 1.6.0
   pullPolicy: IfNotPresent
   ports:
     containerPort: 4000
