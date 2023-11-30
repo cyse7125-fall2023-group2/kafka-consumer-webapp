@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        GH_TOKEN  = credentials('GITHUB_CREDENTIALS_ID')
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('webapp-operator')
+    }
     stages {
         stage('Fetch GitHub Credentials') {
             steps {
