@@ -9,11 +9,11 @@ const dpService = require('./httpCheckService')
 const kafka = new Kafka({
   clientId: 'my-app',
   brokers: [process.env.BROKER_ENDPOINT],
-  sasl: {
-    mechanism: 'plain', // scram-sha-256 or scram-sha-512
-    username: process.env.SASL_USERNAME,
-    password: process.env.SASL_PASSWORD
-  }
+  // sasl: {
+  //   mechanism: 'plain', // scram-sha-256 or scram-sha-512
+  //   username: process.env.SASL_USERNAME,
+  //   password: process.env.SASL_PASSWORD
+  // }
 })
 
 
