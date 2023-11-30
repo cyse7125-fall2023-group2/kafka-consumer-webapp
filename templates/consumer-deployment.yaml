@@ -43,13 +43,13 @@ spec:
             {{- end }}
             - name: BROKER_ENDPOINT
               value: {{ .Release.Name }}.default.svc.cluster.local:9092
-            - name: SASL_USERNAME
-              value: {{.Values.kafkaBroker.user}}
-            - name: SASL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-user-passwords
-                  key: client-passwords
+            # - name: SASL_USERNAME
+            #   value: {{.Values.kafkaBroker.user}}
+            # - name: SASL_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ .Release.Name }}-user-passwords
+            #       key: client-passwords
           ports:
             - containerPort: {{ .Values.primaryContainer.ports.containerPort }}
           volumeMounts:
