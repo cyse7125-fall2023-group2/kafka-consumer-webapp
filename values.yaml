@@ -98,6 +98,15 @@ tolerations: []
 affinity: {}
 
 kafka:
+  listeners:
+    client:
+      protocol: PLAINTEXT
+    controller:
+      protocol: PLAINTEXT
+    interbroker:
+      protocol: PLAINTEXT
+    external:
+      protocol: PLAINTEXT
   provisioning:
     enabled: true
     numPartitions: 3
@@ -125,7 +134,7 @@ deployment:
 primaryContainer:
   name: csye7125-webapp
   repository: sumanthksai/consumer-webapp
-  tag: 1.6.0
+  tag: 1.8.0
   pullPolicy: IfNotPresent
   ports:
     containerPort: 4000
