@@ -23,7 +23,6 @@ pipeline {
                         helm install dev-kafka .
                          """
                     }
-    
                 }
             }
         }
