@@ -63,10 +63,10 @@ pipeline {
                         sh """
                             echo ${version_id}
                             docker login -u \${dockerHubUsername} -p \${dockerHubPassword}
-                            docker build -t sumanthksai/csye7125-consumer-webapp:${version_id} .
-                            docker push sumanthksai/csye7125-consumer-webapp:${version_id} 
-                            docker build -t sumanthksai/csye7125-consumer-flyway:latest ./database
-                            docker push sumanthksai/csye7125-consumer-flyway:latest
+                            docker build -t sumanthksai/consumer-webapp:${version_id} .
+                            docker push sumanthksai/consumer-webapp:${version_id} 
+                            docker build -t sumanthksai/fly-v2:latest ./database
+                            docker push sumanthksai/fly-v2:latest
                         """
                     }
                 }
