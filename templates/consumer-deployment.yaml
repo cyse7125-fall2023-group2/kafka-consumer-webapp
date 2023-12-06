@@ -42,7 +42,7 @@ spec:
               value: {{ .value | quote  }}
             {{- end }}
             - name: BROKER_ENDPOINT
-              value: {{ .Release.Name }}.default.svc.cluster.local:9092
+              value: {{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:9092
             # - name: SASL_USERNAME
             #   value: {{.Values.kafkaBroker.user}}
             # - name: SASL_PASSWORD
