@@ -2,12 +2,12 @@ pipeline {
     agent any
     environment {
         GH_TOKEN  = credentials('GITHUB_CREDENTIALS_ID')
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('webapp-operator-gcp')
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('webapp-operator')
         HELM_CHART_REPO = 'https://github.com/cyse7125-fall2023-group2/kafka-consumer-helm'
         HELM_RELEASE_NAME = 'dev-kafka'
         NAMESPACE = 'consumer'
-        PROJECT_ID = 'csye7125-cloud-003'
-        CLUSTER_NAME = 'csye7125-cloud-003-gke'
+        PROJECT_ID = 'csye7125-cloud-79'
+        CLUSTER_NAME = 'csye7125-cloud-79-gke'
         REGION = 'us-east1'
     }
     stages {
