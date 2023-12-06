@@ -107,15 +107,15 @@ pipeline {
         stage('Create namespace and add istio label'){
             steps{
                 script{
-                    def cosumerNSExists = sh(script: "kubectl get namespace ${CONSUMER_NS}", returnStatus: true) == 0
+                    def cosumerNSExists = sh(script: "kubectl get namespace ${NAMESPACE}", returnStatus: true) == 0
 
                     if (!cosumerNSExists) {
                         sh """
-                            kubectl create namespace ${CONSUMER_NS}
+                            kubectl create namespace ${NAMESPACE}
                         """
                     }
 
-                    sh "kubectl label namespace ${CONSUMER_NS} istio-injection=enabled"
+                    sh "kubectl label namespace ${NAMESPACE} istio-injection=enabled"
                 }
             }
         }
