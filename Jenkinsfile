@@ -115,7 +115,7 @@ pipeline {
                         """
                     }
 
-                    // sh "kubectl label namespace ${NAMESPACE} istio-injection=enabled"
+                    sh "kubectl label namespace ${NAMESPACE} istio-injection=enabled"
                 }
             }
         }
