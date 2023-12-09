@@ -8,7 +8,7 @@ pipeline {
         NAMESPACE = 'consumer'
         PROJECT_ID = 'csye7125-cloud-003'
         CLUSTER_NAME = 'csye7125-cloud-003-gke'
-        REGION = 'us-east1'
+        REGION = 'us-west1'
     }
     stages {
         stage('Fetch GitHub Credentials') {
